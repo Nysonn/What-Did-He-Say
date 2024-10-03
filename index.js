@@ -7,7 +7,6 @@ import bcrypt from "bcrypt";
 import multer from "multer";
 import session from 'express-session';
 import path from 'path';
-import sharp from "sharp";
 
 dotenv.config();
 
@@ -16,11 +15,19 @@ const app = express();
 
 // Middleware setup
 app.use(session({
-  secret: 'your_secret_key', // Replace with a strong secret key
+  secret: process.env.SESSION_SECRET, // Replace with a strong secret key
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set secure to true if using HTTPS
+  cookie: { 
+    secure: false, // Set to true if using HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+  }
 }));
+
+//TESTING COOKIES
+app.get('/session', (req, res) => {
+  res.json(req.session);
+});
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
