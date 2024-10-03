@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/sign-up.css">
+  <title>Sign Up | What Did He Say</title>
+</head>
+<body>
+  <div class="signup_form">
+    <form id="signupForm" action="/signup" method="POST">
+      <h3>Sign Up</h3>
+
+      <!-- Username input box -->
+      <div class="input_box">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required />
+      </div>
+
+      <!-- Email input box -->
+      <div class="input_box">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter email address" required />
+      </div>
+      
+      <!-- Password input box -->
+      <div class="input_box">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
+      </div>
+
+      <!-- Error message display -->
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+      
+      <!-- Sign up button -->
+      <button type="submit">Sign Up</button>
+      
+      <!-- Login prompt -->
+      <p class="login_prompt">Already have an account? <a href="/login">Log In</a></p>
+    </form>
+  </div>
+</body>
+</html>

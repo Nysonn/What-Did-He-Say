@@ -1,0 +1,133 @@
+/* Google Fonts Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* Resetting default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body and background */
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/wdhs-image.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(1px);
+    opacity: 0.4;
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* User Info Section */
+.user_info_section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user_info_section img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 12px;
+  margin-bottom : 20px;
+  object-fit: cover; 
+}
+
+.user_details {
+    flex-grow: 1;
+}
+
+.username {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.email {
+    font-size: 1.1em;
+    font-weight: 300;
+    color: #666;
+}
+
+.edit_profile {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #4954d0;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.edit_profile:hover {
+    background-color: white;
+    color : #4954d0;
+    border : 2px solid #4954d0;
+}
+
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .account_icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .username {
+        font-size: 1.5em;
+    }
+
+    .container {
+        padding: 30px;
+        margin : 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .account_icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .username {
+        font-size: 1.2em;
+    }
+
+    .container {
+        padding: 20px;
+    }
+}

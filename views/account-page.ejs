@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account Page</title>
+    <link rel="stylesheet" href="account-page.css">
+</head>
+<body>
+    <div class="container">
+        <div class="user_info_section">
+            <div class="user_image">
+              <img src="<%= user.account_icon || 'default-icon.png' %>" alt="Account Icon" />
+            </div>
+            <div class="user_details">
+                <h1 class="username"><%= user.username %></h1>
+                <p class="email"><%= user.email %></p>
+                <a href="/edit-profile" class="edit_profile">Edit Profile</a>
+            </div>
+        </div>
+
+        <!-- <div class="user_posts_section">
+            <h2>Your Posts</h2>
+            <% if (posts.length > 0) { %>
+                <% posts.forEach(post => { %>
+                    <div class="post">
+                        <img src="<%= post.image_url %>" alt="Post Image">
+                        <p><%= post.text_content %></p>
+                        <a href="/posts/<%= post.id %>" class="view_post">View Post</a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No posts available</p>
+            <% } %>
+        </div> -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="edit-profile.css"> <!-- Update the path as necessary -->
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Profile</h1>
+        <form action="/edit-profile" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="<%= user.username %>" required>
+            </div>
+            <div class="form-group">
+                <label for="account_icon">Account Icon:</label>
+                <input type="file" id="account_icon" name="account_icon">
+                <% if (user.account_icon) { %>
+                    <p>Current Icon:</p>
+                    <img src="<%= user.account_icon %>" alt="Current Account Icon" class="account_icon" style="width: 100px; height: 100px;">
+                <% } %>
+            </div>
+            <button type="submit">Update Profile</button>
+        </form>
+        <a href="/account">Cancel</a>
+    </div>
+</body>
+</html>

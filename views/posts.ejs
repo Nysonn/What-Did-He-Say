@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts | What Did He Say</title>
+  <link rel="stylesheet" href="/posts.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- User Profile Section -->
+<section class="user_profile">
+  <div class="profile_info">
+    <img src="<%= user.account_icon || 'default-icon.png' %>" alt="Account Icon" />
+    <a href="http://localhost:3000/account" class="username"><%= user.username %></a> <!-- Clickable username linking to profile -->
+  </div>
+</section>
+
+
+    <!-- Form to Create a Post -->
+    <section class="create_post">
+      <h3>Create a Post</h3>
+      <form action="/posts" method="POST" enctype="multipart/form-data">
+        <div class="input_box">
+          <label for="post_text">Your Post</label>
+          <textarea id="post_text" name="post_text" placeholder="What's on your mind?" required></textarea>
+        </div>
+        <div class="input_box">
+          <label for="image">Add Image</label>
+          <input type="file" id="image" name="image">
+        </div>
+        <button type="submit">Post</button>
+      </form>
+    </section>
+
+    <!-- Section to Display Posts -->
+    <section class="posts">
+      <h3>Recent Posts</h3>
+      <% if (posts.length > 0) { %> <!-- Check if posts exist -->
+        <% posts.forEach(post => { %> <!-- Loop through each post -->
+          <div class="post">
+            <% if (post.image_url) { %> <!-- If post has an image -->
+              <img src="<%= post.image_url %>" alt="Post Image">
+            <% } %>
+            <p><%= post.text_content %></p>
+            <small>Posted by: <%= post.username %></small>
+
+            <!-- Section for Comments -->
+            <section class="comments_section">
+              <h4>Comments</h4>
+              
+              <!-- Form to Add Comment -->
+              <div class="comment_form">
+                <form action="/posts/<%= post.id %>/comment" method="POST">
+                  <input type="text" name="comment_text" placeholder="Write a comment..." required>
+                  <button type="submit">Comment</button>
+                </form>
+              </div>
+
+              <!-- Display Comments -->
+              <% if (post.comments && post.comments.length > 0) { %>
+                <% post.comments.forEach(comment => { %>
+                  <div class="comment">
+                    <p><%= comment.comment_text %></p>
+                    <small>Commented by: <%= comment.username %></small>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No comments yet.</p>
+              <% } %>
+
+            </section>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No posts available. Be the first to post something!</p>
+      <% } %>
+    </section>
+  </div>
+</body>
+</html>

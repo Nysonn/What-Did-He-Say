@@ -1,0 +1,365 @@
+/* Google Fonts Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* Resetting default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body and general container styling */
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    position: relative;
+}
+
+/* Optional Blurred Background Image */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/wdhs-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin : 0;
+    padding : 0;
+    filter: blur(1px);
+    opacity: 0.4;
+    z-index: -1;
+}
+
+/* Container styling */
+.container {
+    max-width: 700px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    margin : 30px;
+}
+
+.profile_info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 12px;
+        object-fit: cover; 
+}
+
+/* Create Post Section Styling */
+.create_post {
+    margin-bottom: 30px;
+}
+
+.create_post h3 {
+    font-size: 22px;
+    color: #4954d0;
+    margin-bottom: 15px;
+}
+
+.create_post .input_box {
+    margin-bottom: 15px;
+}
+
+.create_post .input_box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.create_post .input_box textarea {
+    width: 100%;
+    padding: 10px;
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+    font-size: 16px;
+}
+
+.create_post .input_box input[type="file"] {
+    display: block;
+    margin-top: 10px;
+}
+
+.create_post button {
+    width: 100%;
+    background: #626cd6;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.create_post button:hover {
+    background: #4954d0;
+}
+
+/* Posts Section Styling */
+.posts h3 {
+    font-size: 22px;
+    color: #4954d0;
+    margin-bottom: 20px;
+}
+
+.post {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post img {
+  width: 100%;
+  max-width: 500px; /* Limit the width of the image */
+  max-height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Comments Section Styling */
+.comments_section h4 {
+    font-size: 16px;
+    color: #4954d0;
+    margin-bottom: 10px;
+}
+
+.comment_form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.comment_form input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.comment_form button {
+    padding: 8px 12px;
+    background: #626cd6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.comment_form button:hover {
+    background: #4954d0;
+}
+
+.comment {
+    background: #eaeaea;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Tablets and small screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+        max-width: 90%;
+        margin : 30px;
+    }
+
+    .create_post h3,
+    .posts h3 {
+        font-size: 20px;
+    }
+
+    .create_post .input_box textarea {
+        height: 80px;
+    }
+
+    .post {
+        padding: 15px;
+    }
+
+    .create_post button,
+    .comment_form button {
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        max-width: 100%;
+        margin : 30px;
+    }
+
+    .create_post h3,
+    .posts h3 {
+        font-size: 18px;
+    }
+
+    .create_post .input_box textarea {
+        height: 70px;
+    }
+
+    .post {
+        padding: 10px;
+    }
+
+    .post p {
+        font-size: 14px;
+    }
+
+    .comment_form input {
+        padding: 6px;
+    }
+
+    .comment_form button {
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+
+    .create_post button {
+        font-size: 16px;
+    }
+}
+
+/* User Profile Section Styling */
+.user_profile {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile_info {
+    display: flex;
+    align-items: center;
+}
+
+.account_icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 1.1em;
+    color : #333;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.username:hover {
+    color: #4954d0;
+}
+
+
+.view_profile {
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    padding: 8px 16px;
+    background-color: #626cd6;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.view_profile:hover {
+    background-color: white;
+    color : #626cd6;
+    border : 2px solid #626cd6;
+}
+
+/* Media Queries for User Profile Section */
+
+/* Tablets and small screens */
+@media (max-width: 768px) {
+    .user_profile {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .account_icon {
+        width: 35px;
+        height: 35px;
+        margin-bottom: 5px;
+    }
+
+    .username {
+        font-size: 1.1em;
+        margin-right: 0;
+    }
+
+    .view_profile {
+        font-size: 0.9em;
+        padding: 6px 12px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .user_profile {
+        padding: 8px;
+        margin-bottom: 15px;
+    }
+
+    .account_icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .username {
+        font-size: 1em;
+    }
+
+    .view_profile {
+        font-size: 0.85em;
+        padding: 5px 10px;
+    }
+}
