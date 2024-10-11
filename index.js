@@ -12,6 +12,7 @@ dotenv.config();
 
 const port = 3000;
 const app = express();
+const host =  '192.168.215.123';
 
 // Middleware setup
 app.use(session({
@@ -305,6 +306,6 @@ app.post('/edit-profile', upload.single('account_icon'), async (req, res) => {
 });
 
 // START THE SERVER
-app.listen(port, () => {
+app.listen(port,host, () => {
   console.log(`Server running on port ${port}`);
 });
