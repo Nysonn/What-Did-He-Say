@@ -12,17 +12,23 @@ dotenv.config();
 
 const port = 3000;
 const app = express();
-const host =  '192.168.215.123';
 
-// Middleware setup
+const db = new pg.Client({
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
+});
+
+// Connect to the PostgreSQL database
+db.connect();
+
 app.use(session({
-  secret: process.env.SESSION_SECRET, // Replace with a strong secret key
+  secret: process.env.SESSION_SECRET, // Make sure you have this secret in your .env file
   resave: false,
-  saveUninitialized: true,
-  cookie: { 
-    secure: false, // Set to true if using HTTPS
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
-  }
+  saveUninitialized: false,
+  cookie: { secure: false } // Set to true if you use HTTPS
 }));
 
 //TESTING COOKIES
@@ -41,17 +47,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-const db = new pg.Client({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT,
-});
-
-// Connect to the PostgreSQL database
-db.connect();
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
@@ -306,6 +301,6 @@ app.post('/edit-profile', upload.single('account_icon'), async (req, res) => {
 });
 
 // START THE SERVER
-app.listen(port,host, () => {
+app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
