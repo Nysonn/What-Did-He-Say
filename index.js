@@ -1,6 +1,5 @@
 import express from "express";
 import bodyParser from "body-parser";
-import axios from "axios";
 import dotenv from "dotenv";
 import pg from "pg";
 import bcrypt from "bcrypt";

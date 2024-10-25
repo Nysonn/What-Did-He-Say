@@ -7,16 +7,44 @@
   <link rel="stylesheet" href="/posts.css">
 </head>
 <body>
-  <div class="container">
+     <!-- LEFT SIDE BAR -->
+     <nav class="sidebar">
+      <ul class="nav_links">
+        <li><a href="/search">Search</a></li>
+        <li><a href="/posts">New Posts</a></li>
+        <li><a href="/shorts">Shorts</a></li>
+        <li><a href="/dms">My DMs</a></li>
+        <li><a href="/notifications">Notifications</a></li>
+        <li><a href="/settings">Settings</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </nav>
 
-    <!-- User Profile Section -->
-<section class="user_profile">
-  <div class="profile_info">
-    <img src="<%= user.account_icon || 'default-icon.png' %>" alt="Account Icon" />
-    <a href="http://localhost:3000/account" class="username"><%= user.username %></a> <!-- Clickable username linking to profile -->
-  </div>
-</section>
+    <!-- RIGHT SIDE BAR -->
+    <aside class="right_sidebar">
+      <h3>Account</h3>
+      <section class="user_profile">
+        <div class="profile_info">
+          <img src="<%= user.account_icon || 'default-icon.png' %>" alt="Account Icon" />
+          <a href="http://localhost:3000/account" class="username"><%= user.username %></a>
+        </div>
+      </section>
+    
+      <div class="user_stats">
+        <h4>Analytics</h4>
+        <p>Posts: <span id="post_count">25</span></p>
+        <p>Comments: <span id="comment_count">40</span></p>
+        <p>Followers: <span id="follower_count">200</span></p>
+      </div>
+    
+      <div class="quote">
+        <h4>Quote of the day</h4>
+        <p id="quoteText">“Stay positive, work hard, make it happen.”</p>
+      </div>
+    </aside>
+    
 
+    <div class="container">
 
     <!-- Form to Create a Post -->
     <section class="create_post">
@@ -77,6 +105,39 @@
         <p>No posts available. Be the first to post something!</p>
       <% } %>
     </section>
-  </div>
+</div>
+
+<script>
+  const quotes = [
+    "“Stay positive, work hard, make it happen.”",
+    "“The best time to plant a tree was 20 years ago. The second best time is now.”",
+    "“Your limitation—it's only your imagination.”",
+    "“Push yourself, because no one else is going to do it for you.”",
+    "“Great things never come from comfort zones.”"
+  ];
+
+  let currentIndex = 0;
+
+  function showQuote(index) {
+    const quoteTextElement = document.getElementById('quoteText');
+    quoteTextElement.textContent = quotes[index];
+    quoteTextElement.classList.add('show');
+
+    // Fade out effect after 8 seconds (to keep it visible for 10 seconds)
+    setTimeout(() => {
+      quoteTextElement.classList.remove('show');
+    }, 8000);
+  }
+
+  function nextQuote() {
+    currentIndex = (currentIndex + 1) % quotes.length;
+    showQuote(currentIndex);
+  }
+
+  // Show the first quote immediately
+  showQuote(currentIndex);
+  // Change quotes every 10 seconds
+  setInterval(nextQuote, 10000);
+</script>
 </body>
 </html>

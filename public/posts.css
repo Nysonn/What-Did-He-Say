@@ -16,7 +16,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: rgba(240, 240, 240, 0.9);
     background-size: cover;
     background-position: center;
     background-blend-mode: overlay;
@@ -31,7 +31,6 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/images/wdhs-image.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -54,14 +53,6 @@ body::before {
     position: relative;
     z-index: 1;
     margin : 30px;
-}
-
-.profile_info img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 12px;
-        object-fit: cover; 
 }
 
 /* Create Post Section Styling */
@@ -266,10 +257,8 @@ body::before {
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 20px;
+    margin-right : 40px;
     padding: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile_info {
@@ -283,6 +272,14 @@ body::before {
     border-radius: 50%;
     margin-right: 10px;
     object-fit: cover;
+}
+
+.profile_info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover; 
 }
 
 .username {
@@ -340,6 +337,10 @@ body::before {
         font-size: 0.9em;
         padding: 6px 12px;
     }
+
+    .sidebar, .right_sidebar {
+        display : none;
+    }
 }
 
 /* Mobile phones */
@@ -361,5 +362,121 @@ body::before {
     .view_profile {
         font-size: 0.85em;
         padding: 5px 10px;
+    }
+}
+
+/* SIDEBAR STYLES */
+.sidebar {
+    width: 200px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-left: 35px;
+    margin-top : 30px;
+    border-radius: 16px;
+    height: 450px;
+    z-index: 2;
+    color: white;
+    transition: transform 0.3s ease; /* Smooth slide-in effect */
+}
+
+/* Sidebar Links */
+.sidebar .nav_links {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .nav_links li {
+    margin: 15px 0;
+}
+
+.sidebar .nav_links li a {
+    color: #4954d0;
+    font-size : 19px;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar .nav_links li a:hover {
+    background-color: #626cd6;
+    color : white;
+}
+
+/* Toggle Sidebar Button for Mobile */
+.toggle_sidebar {
+    display: none; /* Hidden by default on larger screens */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #4954d0;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 3;
+    border-radius: 5px;
+}
+
+/* RIGHT SIDE-BAR */
+.right_sidebar {
+    width: 200px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-right: 35px;
+    margin-top: 30px;
+    border-radius: 16px;
+    height: auto;
+    z-index: 2;
+    color: #333;
+  }
+  
+  .right_sidebar h3, .right_sidebar h4 {
+    color: #4954d0;
+  }
+  
+  .quick_links, .user_stats, .quote {
+    margin-bottom: 20px;
+  }
+  
+  .user_stats p {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .quote p {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+  }  
+
+   /* Simple fade effect */
+   .fade {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  .fade.show {
+    opacity: 1;
+  }
+
+/* Responsive Media Query */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%); /* Hide sidebar by default on mobile */
+    }
+    .sidebar.active {
+        transform: translateX(0); /* Show sidebar when active */
+    }
+    .toggle_sidebar {
+        display: block; /* Display toggle button on mobile */
     }
 }
