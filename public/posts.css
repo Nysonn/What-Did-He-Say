@@ -367,6 +367,8 @@ body::before {
 
 /* SIDEBAR STYLES */
 .sidebar {
+    display: flex;
+    flex-direction: column;
     width: 200px;
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
@@ -376,10 +378,38 @@ body::before {
     margin-left: 35px;
     margin-top : 30px;
     border-radius: 16px;
+    width : 250px;
     height: 450px;
     z-index: 2;
     color: white;
     transition: transform 0.3s ease; /* Smooth slide-in effect */
+}
+
+.search_container {
+    display: none; /* Initially hidden */
+    align-items: center;
+    margin-top: 10px;
+}
+
+#search_input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 80%; /* Width of the search input */
+}
+
+#close_search {
+    background: none;
+    border: none;
+    color: #4954d0;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Optional styling for when the search is active */
+.search_container {
+    margin-top: 20px; /* Adjust spacing if necessary */
 }
 
 /* Sidebar Links */
@@ -480,3 +510,21 @@ body::before {
         display: block; /* Display toggle button on mobile */
     }
 }
+
+/* Search Button Styling */
+.open_search_btn {
+    background: #4954d0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.open_search_btn:hover {
+    background: #626cd6;
+}
+
+

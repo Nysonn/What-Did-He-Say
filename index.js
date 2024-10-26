@@ -23,12 +23,17 @@ const db = new pg.Client({
 // Connect to the PostgreSQL database
 db.connect();
 
+//COOKIE SESSION
 app.use(session({
-  secret: process.env.SESSION_SECRET, // Make sure you have this secret in your .env file
+  secret: process.env.SESSION_SECRET, 
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Set to true if you use HTTPS
+  cookie: { 
+    secure: false, 
+    maxAge: 24 * 60 * 60 * 1000 // 1 day 
+  }
 }));
+
 
 //TESTING COOKIES
 app.get('/session', (req, res) => {
@@ -62,15 +67,56 @@ app.get("/sign-up", (req, res) => {
   res.render("sign-up", { error: null });
 });
 
+//GET ROUTE FOR CHECKING UNIQUE NAME
+app.get('/check-username', async (req, res) => {
+  const username = req.query.username;
+  const user = await db.query('SELECT * FROM users WHERE username = $1', [username]);
+
+  res.json(user.rowCount === 0); // Returns true if the username is unique
+});
+
 // POST ROUTE SIGN-UP ROUTE
 app.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
+  // Regex to match valid email domains (e.g., gmail.com, yahoo.com)
+  const validEmailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/;
+  // Regex to check username constraints (max 2 digits, max 20 characters)
+  const usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{1,20}$/;
+  const digitCount = (username.match(/\d/g) || []).length;
+
   try {
+    // Validate username format and ensure it’s unique
+    if (!usernameRegex.test(username) || digitCount > 2) {
+      return res.status(400).json({
+        error: 'Username must be 1-20 characters, contain max 2 digits, and no special characters.'
+      });
+    }
+
+    // Check if the username already exists
+    const usernameCheck = await db.query('SELECT * FROM users WHERE username = $1', [username]);
+    if (usernameCheck.rows.length > 0) {
+      return res.status(400).json({ error: 'Username is already taken' });
+    }
+
+    // Validate email format
+    if (!validEmailRegex.test(email)) {
+      return res.status(400).json({
+        error: 'Email must end with @gmail.com, @yahoo.com, or @outlook.com'
+      });
+    }
+
     // Check if the email already exists in the database
-    const userCheck = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (userCheck.rows.length > 0) {
+    const emailCheck = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    if (emailCheck.rows.length > 0) {
       return res.status(400).json({ error: 'Email is already registered' });
+    }
+
+    // Validate password strength
+    if (password.length < 8 || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+      return res.status(400).json({
+        error: 'Password must be at least 8 characters, include an uppercase letter and a number'
+      });
     }
 
     // Hash the password before saving it to the database
@@ -93,7 +139,6 @@ app.post('/signup', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
 
 // GET ROUTE FOR LOGIN
 app.get("/login", (req, res) => {
@@ -298,6 +343,33 @@ app.post('/edit-profile', upload.single('account_icon'), async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+// GET ROUTE FOR THE SEARCH PAGE
+app.get('/search', (req, res) => {
+  res.render('search');
+});
+
+// GET ROUTE FOR THE SEARCH RESULTS
+app.get('/search/results', (req, res) => {
+  const searchQuery = req.query.query;
+  // Logic to process search query and retrieve results
+  res.render('search-results', { query: searchQuery, results: [] }); // Example setup
+});
+
+//GET ROUTE FOR SEARCH RESULTS IN REAL-TIME TO KEEP UPDATING
+app.get('/search/results', (req, res) => {
+  const searchQuery = req.query.query;
+  // Replace with your logic to fetch matching results based on `searchQuery`
+  const results = [
+      { title: "Sample Result 1" },
+      { title: "Sample Result 2" },
+      { title: "Sample Result 3" }
+  ].filter(result => result.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  
+  res.json({ results });
+});
+
+
 
 // START THE SERVER
 app.listen(port, () => {

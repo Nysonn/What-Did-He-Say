@@ -133,3 +133,20 @@ form a:hover {
     color: #764ba2;
     font-weight: 600;
 }
+
+/* CLIENT SIDE VALIDATION */
+/* Real-time feedback styling */
+.input_box input.valid {
+    border-color: #4CAF50; /* Green for valid input */
+}
+
+.input_box input.invalid {
+    border-color: #E57373; /* Red for invalid input */
+}
+
+.error {
+    color: #E57373;
+    font-size: 14px;
+    margin-top: 5px;
+}
+

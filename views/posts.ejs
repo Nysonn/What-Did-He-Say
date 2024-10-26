@@ -10,7 +10,7 @@
      <!-- LEFT SIDE BAR -->
      <nav class="sidebar">
       <ul class="nav_links">
-        <li><a href="/search">Search</a></li>
+        <li><a href="#" id="search_link">Search</a></li>
         <li><a href="/posts">New Posts</a></li>
         <li><a href="/shorts">Shorts</a></li>
         <li><a href="/dms">My DMs</a></li>
@@ -18,6 +18,11 @@
         <li><a href="/settings">Settings</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
+
+      <div class="search_container" id="search_container">
+        <input type="text" placeholder="Search..." id="search_input" />
+        <button id="close_search">✖</button>
+      </div>
     </nav>
 
     <!-- RIGHT SIDE BAR -->
@@ -42,7 +47,6 @@
         <p id="quoteText">“Stay positive, work hard, make it happen.”</p>
       </div>
     </aside>
-    
 
     <div class="container">
 
@@ -107,37 +111,6 @@
     </section>
 </div>
 
-<script>
-  const quotes = [
-    "“Stay positive, work hard, make it happen.”",
-    "“The best time to plant a tree was 20 years ago. The second best time is now.”",
-    "“Your limitation—it's only your imagination.”",
-    "“Push yourself, because no one else is going to do it for you.”",
-    "“Great things never come from comfort zones.”"
-  ];
-
-  let currentIndex = 0;
-
-  function showQuote(index) {
-    const quoteTextElement = document.getElementById('quoteText');
-    quoteTextElement.textContent = quotes[index];
-    quoteTextElement.classList.add('show');
-
-    // Fade out effect after 8 seconds (to keep it visible for 10 seconds)
-    setTimeout(() => {
-      quoteTextElement.classList.remove('show');
-    }, 8000);
-  }
-
-  function nextQuote() {
-    currentIndex = (currentIndex + 1) % quotes.length;
-    showQuote(currentIndex);
-  }
-
-  // Show the first quote immediately
-  showQuote(currentIndex);
-  // Change quotes every 10 seconds
-  setInterval(nextQuote, 10000);
-</script>
+<script src="/js/posts.js"></script>
 </body>
 </html>

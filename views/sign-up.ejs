@@ -15,18 +15,21 @@
       <div class="input_box">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Enter username" required />
+        <span id="username-error" class="error"></span>
       </div>
 
       <!-- Email input box -->
       <div class="input_box">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="Enter email address" required />
+        <span id="email-error" class="error"></span>
       </div>
       
       <!-- Password input box -->
       <div class="input_box">
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <span id="password-error" class="error"></span>
       </div>
 
       <!-- Error message display -->
@@ -41,5 +44,7 @@
       <p class="login_prompt">Already have an account? <a href="/login">Log In</a></p>
     </form>
   </div>
+
+  <script src="/js/sign-up.js"></script>
 </body>
 </html>
