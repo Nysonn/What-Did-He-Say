@@ -22,6 +22,7 @@
       <div class="search_container" id="search_container">
         <input type="text" placeholder="Search..." id="search_input" />
         <button id="close_search">✖</button>
+        <div id="search_results"></div> 
       </div>
     </nav>
 
@@ -30,7 +31,7 @@
       <h3>Account</h3>
       <section class="user_profile">
         <div class="profile_info">
-          <img src="<%= user.account_icon || 'default-icon.png' %>" alt="Account Icon" />
+          <img src="<%= user.account_icon || 'badiman-pic.jpg' %>" alt="Account Icon" />
           <a href="http://localhost:3000/account" class="username"><%= user.username %></a>
         </div>
       </section>

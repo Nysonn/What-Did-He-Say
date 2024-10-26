@@ -1,7 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import pg from "pg";
+import pkg from "pg"; // Use default import
+const { Client } = pkg; // Destructure Client from the package
+import pg from "pg"; 
 import bcrypt from "bcrypt";
 import multer from "multer";
 import session from 'express-session';
@@ -81,18 +83,8 @@ app.post('/signup', async (req, res) => {
 
   // Regex to match valid email domains (e.g., gmail.com, yahoo.com)
   const validEmailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/;
-  // Regex to check username constraints (max 2 digits, max 20 characters)
-  const usernameRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]{1,20}$/;
-  const digitCount = (username.match(/\d/g) || []).length;
 
   try {
-    // Validate username format and ensure it’s unique
-    if (!usernameRegex.test(username) || digitCount > 2) {
-      return res.status(400).json({
-        error: 'Username must be 1-20 characters, contain max 2 digits, and no special characters.'
-      });
-    }
-
     // Check if the username already exists
     const usernameCheck = await db.query('SELECT * FROM users WHERE username = $1', [username]);
     if (usernameCheck.rows.length > 0) {
@@ -177,6 +169,10 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// GET ROUTE FOR LOGOUT
+app.get("/logout", (req, res) => {
+  res.render("login", { error: null });
+});
 
 // GET ROUTE FOR POSTS PAGE
 app.get('/posts', async (req, res) => {
@@ -344,32 +340,65 @@ app.post('/edit-profile', upload.single('account_icon'), async (req, res) => {
   }
 });
 
-// GET ROUTE FOR THE SEARCH PAGE
-app.get('/search', (req, res) => {
-  res.render('search');
+// MOCK FUNCTION TO SEARCH THROUGH POSTS, COMMENTS AND USERS
+async function mockSearch(searchTerm) {
+  try {
+      const postsQuery = `SELECT * FROM posts WHERE text_content ILIKE $1`;
+      const commentsQuery = `SELECT * FROM comments WHERE comment_text ILIKE $1`;
+      const usersQuery = `SELECT * FROM users WHERE username ILIKE $1`;
+
+      const searchPattern = `%${searchTerm}%`; // Wildcard search pattern
+
+      // Execute all queries using the db client
+      const [postsResult, commentsResult, usersResult] = await Promise.all([
+          db.query(postsQuery, [searchPattern]),
+          db.query(commentsQuery, [searchPattern]),
+          db.query(usersQuery, [searchPattern])
+      ]);
+
+      return {
+          posts: postsResult.rows,
+          comments: commentsResult.rows,
+          users: usersResult.rows
+      };
+  } catch (error) {
+      console.error('Error executing search queries:', error);
+      throw error; // Rethrow the error for the outer catch to handle
+  }
+}
+
+// GET ROUTE FOR SEARCH RESULTS
+app.get('/search', async (req, res) => {
+  const query = req.query.q; // Get the search query from the URL
+  if (query) {
+      try {
+          const searchResults = await mockSearch(query);
+          console.log('Search Results:', searchResults); 
+          res.json(searchResults); // Send back the search results as JSON
+      } catch (error) {
+          console.error('Error retrieving search results:', error);
+          res.status(500).send(`Error retrieving search results: ${error.message}`);
+      }
+  } else {
+      res.render('posts'); // Render the search page if no query
+  }
 });
 
-// GET ROUTE FOR THE SEARCH RESULTS
-app.get('/search/results', (req, res) => {
-  const searchQuery = req.query.query;
-  // Logic to process search query and retrieve results
-  res.render('search-results', { query: searchQuery, results: [] }); // Example setup
+// POST ROUTE  FOR SUBMITTING SEARCH QUERY
+app.post('/search', async (req, res) => {
+  const query = req.body.query; // Get the search query from the body
+  if (query) {
+      try {
+          const searchResults = await mockSearch(query);
+          res.json(searchResults); // Send back the search results as JSON
+      } catch (error) {
+          console.error('Error retrieving search results:', error);
+          res.status(500).send(`Error retrieving search results: ${error.message}`);
+      }
+  } else {
+      res.status(400).send('Search query is required');
+  }
 });
-
-//GET ROUTE FOR SEARCH RESULTS IN REAL-TIME TO KEEP UPDATING
-app.get('/search/results', (req, res) => {
-  const searchQuery = req.query.query;
-  // Replace with your logic to fetch matching results based on `searchQuery`
-  const results = [
-      { title: "Sample Result 1" },
-      { title: "Sample Result 2" },
-      { title: "Sample Result 3" }
-  ].filter(result => result.title.toLowerCase().includes(searchQuery.toLowerCase()));
-  
-  res.json({ results });
-});
-
-
 
 // START THE SERVER
 app.listen(port, () => {
