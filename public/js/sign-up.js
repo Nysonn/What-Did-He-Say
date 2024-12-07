@@ -1,3 +1,4 @@
+//CLIENT-SIDE VALIDATION
 document.addEventListener('DOMContentLoaded', () => {
   const usernameInput = document.getElementById('username');
   const emailInput = document.getElementById('email');
